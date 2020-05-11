@@ -19,7 +19,10 @@ class CreateEventsTable extends Migration
             $table->date('start_at')->comment('公開開始日');
             $table->date('end_at')->comment('公開終了日');
             $table->string('authorization_key', 8)->comment('認証キー');
+            $table->unsignedBigInteger('user_id')->comment('ユーザーID');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
