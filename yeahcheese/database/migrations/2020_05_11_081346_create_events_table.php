@@ -16,6 +16,8 @@ class CreateEventsTable extends Migration
         Schema::create('events', function (Blueprint $table) {
             $table->id();
             $table->string('name')->comment('イベント名');
+            $table->date('start_at')->comment('公開開始日');
+            $table->date('end_at')->comment('公開終了日');
             $table->timestamps();
         });
     }
