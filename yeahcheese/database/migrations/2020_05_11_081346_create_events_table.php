@@ -18,6 +18,7 @@ class CreateEventsTable extends Migration
             $table->string('name')->comment('イベント名');
             $table->date('start_at')->comment('公開開始日');
             $table->date('end_at')->comment('公開終了日');
+            $table->string('authorization_key', 8)->comment('認証キー');
             $table->timestamps();
         });
     }
