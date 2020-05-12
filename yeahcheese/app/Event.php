@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Event extends Model
 {
@@ -12,4 +13,14 @@ class Event extends Model
         'start_at',
         'end_at',
     ];
+
+    /**
+     * このイベントの作成者を取得
+     *
+     * @return BelongsTo
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo('App\User');
+    }
 }
