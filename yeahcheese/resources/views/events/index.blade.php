@@ -12,4 +12,7 @@
             {{ $event->user_id }}
         </p>
     @endforeach
+    <div>
+        <a href="{{ route('events.create') }}" class='btn btn-outline-primary'>イベント新規作成</a>
+    </div>
 @endsection
