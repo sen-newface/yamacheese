@@ -104,8 +104,8 @@ class EventController extends Controller
         $rand = random_int(0, $max);
         $code = sprintf('%0'. $length. 'd', $rand);
 
-        $events = Event::all()->pluck('authorization_key');
-        foreach ($events as $id => $authorizationkey) {
+        $authorizationkeys = Event::all()->pluck('authorization_key');
+        foreach ($authorizationkeys as $id => $authorizationkey) {
             if ($code === $authorizationkey) {
                 $max = pow(10, $length) - 1;
                 $rand = random_int(0, $max);
