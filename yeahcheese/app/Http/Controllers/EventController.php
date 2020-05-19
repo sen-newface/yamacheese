@@ -38,8 +38,9 @@ class EventController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'start_at' => 'nullable|required_with:end_at|date_format:Y-m-d',
-            'end_at' => 'nullable|required_with:start_at|after_or_equal:start_at|date_format:Y-m-d',
+            'name' => 'filled',
+            'start_at' => 'filled|required_with:end_at|date_format:Y-m-d',
+            'end_at' => 'filled|required_with:start_at|after_or_equal:start_at|date_format:Y-m-d',
         ]);
 
         $event = new Event();
