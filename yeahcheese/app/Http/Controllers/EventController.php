@@ -97,23 +97,31 @@ class EventController extends Controller
         //
     }
 
-    public function makeAuthorizationKey()
+    public function eightDigitNumber()
     {
         $length = 8;
         $max = pow(10, $length) - 1;
         $rand = random_int(0, $max);
-        $code = sprintf('%0'. $length. 'd', $rand);
+        return sprintf('%0'. $length. 'd', $rand);
+    }
 
+    public function existAuthorizationKey($code)
+    {
         $authorizationkeys = Event::all()->pluck('authorization_key');
         foreach ($authorizationkeys as $authorizationkey) {
             if ($code === $authorizationkey) {
-                $max = pow(10, $length) - 1;
-                $rand = random_int(0, $max);
-                $code = sprintf('%0'. $length. 'd', $rand);
+                return true;
             }
-            $code = $code;
         }
+        return false;
+    }
 
+    public function makeAuthorizationKey()
+    {
+        $code = $this->eightDigitNumber();
+        if ($this->existAuthorizationKey($code)) {
+            $this->makeAuthorizationKey();
+        }
         return $code;
     }
 }
