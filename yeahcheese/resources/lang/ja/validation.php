@@ -148,5 +148,8 @@ return [
     'attributes' => [
         'email'=>'メールアドレス',
         'password'=>'パスワード',
+        'name'=>'イベント名',
+        'start_at'=>'公開開始日',
+        'end_at'=>'公開終了日',
     ],
 ];
