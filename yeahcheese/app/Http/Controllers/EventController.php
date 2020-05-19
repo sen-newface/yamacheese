@@ -46,7 +46,7 @@ class EventController extends Controller
         $event = new Event();
 
         $event->fill($request->all());
-        $event->authorization_key = EventController::makeAuthorizationKey();
+        $event->authorization_key = $this->makeAuthorizationKey();
         $event->user_id = Auth::user()->id;
         $event->save();
         return redirect('/events');
