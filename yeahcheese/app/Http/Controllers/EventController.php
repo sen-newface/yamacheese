@@ -45,9 +45,7 @@ class EventController extends Controller
 
         $event = new Event();
 
-        $event->name = $request->name;
-        $event->start_at = $request->start_at;
-        $event->end_at = $request->end_at;
+        $event->fill($request->all());
         $event->authorization_key = EventController::makeAuthorizationKey();
         $event->user_id = Auth::user()->id;
         $event->save();
@@ -99,22 +97,32 @@ class EventController extends Controller
         //
     }
 
-    public function makeAuthorizationKey($length = 8)
+    public function makeAuthorizationKey()
     {
+        // 8桁の数字を作る
+        $length = 8;
         $max = pow(10, $length) - 1;
         $rand = random_int(0, $max);
-        $code = sprintf('%0'. $length. 'd', $rand);
+        return sprintf('%0'. $length. 'd', $rand);
+    }
 
-        $events = Event::all()->pluck('authorization_key');
-        foreach ($events as $id => $authorizationkey) {
-            if ($code === $authorizationkey) {
-                $max = pow(10, $length) - 1;
-                $rand = random_int(0, $max);
-                $code = sprintf('%0'. $length. 'd', $rand);
+    public function existAuthorizationKey($code)
+    {
+        $events = Event::all()->pluck('authorization_key');  // 今あるkeyを全部とってくる
+        foreach ($events as $authorizationkey) {  // 今あるkeyを1つ1つ取り出す
+            if ($code === $authorizationkey) {  // 比較して、同じkeyがあったら、8桁の数字を作り直す
+                return true;
             }
-            $code = $code;
         }
+        return false;
+    }
 
-        return $code;
+    public function remakeAuthorizationKey()
+    {
+        $a = $this->makeAuthorizationKey();
+        if ($this->existAuthorizationKey($a)) {
+            $this->remakeAuthorizationKey();
+        }
+        return $a;
     }
 }
