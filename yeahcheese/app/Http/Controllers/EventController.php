@@ -99,7 +99,8 @@ class EventController extends Controller
         //
     }
 
-    public function makeAuthorizationKey($length = 8) {
+    public function makeAuthorizationKey($length = 8)
+    {
         $max = pow(10, $length) - 1;
         $rand = random_int(0, $max);
         $code = sprintf('%0'. $length. 'd', $rand);
