@@ -108,10 +108,8 @@ class EventController extends Controller
     public function existAuthorizationKey($code)
     {
         $authorizationkeys = Event::all()->pluck('authorization_key');
-        foreach ($authorizationkeys as $authorizationkey) {
-            if ($code === $authorizationkey) {
-                return true;
-            }
+        if ($authorizationkeys->contains($code)) {
+            return true;
         }
         return false;
     }
