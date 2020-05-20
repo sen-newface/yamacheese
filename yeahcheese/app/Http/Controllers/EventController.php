@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,7 +26,7 @@ class EventController extends Controller
      */
     public function create()
     {
-        //
+        return view('events.create');
     }
 
     /**
@@ -36,7 +37,19 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'filled',
+            'start_at' => 'filled|required_with:end_at|date_format:Y-m-d',
+            'end_at' => 'filled|required_with:start_at|after_or_equal:start_at|date_format:Y-m-d',
+        ]);
+
+        $event = new Event();
+
+        $event->fill($request->all());
+        $event->authorization_key = $this->makeAuthorizationKey();
+        $event->user_id = Auth::user()->id;
+        $event->save();
+        return redirect('/events');
     }
 
     /**
@@ -82,5 +95,31 @@ class EventController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function eightDigitNumber()
+    {
+        $length = 8;
+        $max = pow(10, $length) - 1;
+        $rand = random_int(0, $max);
+        return sprintf('%0'. $length. 'd', $rand);
+    }
+
+    public function existAuthorizationKey($code)
+    {
+        $authorizationkeys = Event::all()->pluck('authorization_key');
+        if ($authorizationkeys->contains($code)) {
+            return true;
+        }
+        return false;
+    }
+
+    public function makeAuthorizationKey()
+    {
+        $code = $this->eightDigitNumber();
+        if ($this->existAuthorizationKey($code)) {
+            $this->makeAuthorizationKey();
+        }
+        return $code;
     }
 }
