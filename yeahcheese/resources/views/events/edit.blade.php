@@ -14,6 +14,9 @@
     <form action="{{ route('events.update', $event) }}" method="POST">
         {{ method_field('PUT') }}
         {{ csrf_field() }}
+        <input type='hidden' name='id' value='{{ $event->id }}' />
+        <input type='hidden' name='authorization_key' value='{{ $event->authorization_key }}' />
+        <input type='hidden' name='user_id' value='{{ $event->user_id }}' />
         <div>
             <label>イベント名</label><br>
             <input type="text" name="name" value="{{old('name')}}" />
