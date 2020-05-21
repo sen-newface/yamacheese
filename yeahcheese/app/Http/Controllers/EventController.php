@@ -69,21 +69,28 @@ class EventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Event $event)
     {
-        //
+        return view('events.edit', ['event' => $event]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'filled',
+            'start_at' => 'filled|required_with:end_at|date_format:Y-m-d',
+            'end_at' => 'filled|required_with:start_at|after_or_equal:start_at|date_format:Y-m-d',
+        ]);
+
+        $event = Event::find($request->id);
+        $event->fill($request->all())->save();
+        return redirect()->route('events.edit', $event);
     }
 
     /**

@@ -10,6 +10,9 @@
             {{ $event->end_at }},
             {{ $event->authorization_key }},
             {{ $event->user_id }}
+            <div>
+                <a href="{{ route('events.edit', $event) }}" class='btn btn-outline-primary'>編集する</a>
+            </div>
         </p>
     @endforeach
     <div>
