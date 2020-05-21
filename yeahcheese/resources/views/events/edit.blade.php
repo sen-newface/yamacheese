@@ -11,7 +11,8 @@
             </ul>
         </div>
     @endif
-    <form action="/events" method="POST">
+    <form action="{{ route('events.update', $event) }}" method="POST">
+        {{ method_field('PUT') }}
         {{ csrf_field() }}
         <div>
             <label>イベント名</label><br>
