@@ -30,7 +30,7 @@
             <input type="date" name="end_at" value="{{old('end_at', $event->end_at)}}" />
         </div>
         <div>
-            <input type="submit" value="作成する" />
+            <input type="submit" value="更新する" />
         </div>
     </form>
 @endsection
