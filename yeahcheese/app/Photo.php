@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Photo extends Model
 {
+    protected $fillable = [
+        'path',
+    ];
+
     /**
      * この写真が掲載されているイベントを取得
      *
