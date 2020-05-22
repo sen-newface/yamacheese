@@ -18,8 +18,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware('auth')->group(function () {
-    Route::group(['middleware' => ['api']], function () {
-        Route::apiResource('events', 'Api\PhotoController');
-    });
-});
+Route::get('/events/{id}/edit', 'Api\PhotoController@index');
+Route::post('/events/{id/edit', 'Api\PhotoController@store');
+Route::delete('/events/{id}/edit', 'Api\PhotoController@destroy');
