@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Photo;
 use Illuminate\Http\Request;
 
 class PhotoController extends Controller
@@ -12,9 +13,10 @@ class PhotoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        //
+        $photos = Photo::where('event_id', $id)->get();
+        return $photos;
     }
 
     /**
