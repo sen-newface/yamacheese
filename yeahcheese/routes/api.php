@@ -19,5 +19,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/events/{id}/edit', 'Api\PhotoController@index');
-Route::post('/events/{id/edit', 'Api\PhotoController@store');
-Route::delete('/events/{id}/edit', 'Api\PhotoController@destroy');
+Route::post('/events/{id}/edit', 'Api\PhotoController@store');
