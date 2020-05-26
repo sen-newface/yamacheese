@@ -4,7 +4,11 @@
     <h1>イベント編集</h1>
         <body>        
             <div id="app">
-                <eventedit-component></eventedit-component>
+                <eventedit-component
+                    name="{{$event->name}}"
+                    start_at="{{$event->start_at}}"
+                    end_at="{{$event->end_at}}"
+                ></eventedit-component>
             </div>
             <script src="{{ mix('js/app.js') }}"></script>
         </body>
