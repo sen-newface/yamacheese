@@ -47,7 +47,7 @@ class EventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, Event $event)
     {
         $request->validate([
             'name' => 'filled',
@@ -55,7 +55,6 @@ class EventController extends Controller
             'end_at' => 'filled|required_with:start_at|after_or_equal:start_at|date_format:Y-m-d',
         ]);
 
-        $event = Event::find($request->id);
         $event->fill($request->all())->save();
         return $event;
     }
