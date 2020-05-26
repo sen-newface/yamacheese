@@ -21,3 +21,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('/events/{id}/edit', 'Api\PhotoController@index');
 Route::post('/events/{id}/edit', 'Api\PhotoController@store');
 Route::put('/events/{id}/edit', 'Api\EventController@update');
+Route::get('/events/{event}', 'Api\EventController@show');
