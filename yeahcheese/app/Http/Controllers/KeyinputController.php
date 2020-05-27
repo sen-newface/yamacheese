@@ -30,6 +30,12 @@ class KeyinputController extends Controller
         if (is_null($event)) {
             return redirect('/keyinput')->with('error', '認証キーが間違っています');
         }
+        elseif (date("Y-m-d") < $event->start_at) {
+            return redirect('/keyinput')->with('error', '公開期間前です');
+        }
+        elseif ($event->end_at < date("Y-m-d")) {
+            return redirect('/keyinput')->with('error', '公開期間が過ぎています');
+        }
         $photos = Photo::where('event_id', $event->id)->get();
         return view('events.show', ['event' => $event, 'photos' => $photos]);
     }
