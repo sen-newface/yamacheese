@@ -4,7 +4,7 @@
     <h1>イベント一覧</h1>
     <table class='table table-striped table-hover'>
         <tr>
-            <th>イベントID</th><th>イベント名</th><th>公開開始日</th><th>公開終了日</th><th>認証キー</th><th></th>
+            <th>イベントID</th><th>イベント名</th><th>公開開始日</th><th>公開終了日</th><th>認証キー</th><th>写真枚数</th><th></th>
         </tr>
         @foreach ($events as $event)
             <tr>
@@ -22,6 +22,9 @@
                 </td>
                 <td>
                     {{ $event->authorization_key }}
+                </td>
+                <td>
+                    {{ $event->photos()->count() }}
                 </td>
                 <td>
                     <div>
