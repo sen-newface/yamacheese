@@ -15,7 +15,7 @@
                     <input type="date" name="end_at" :value="end_at"/>
                 </div>
                 <div>
-                    <input type="submit" value="更新する" />
+                    <button @click="updateEvent">更新する</button>
                 </div>
             </div>
         </div>
@@ -39,6 +39,29 @@
             end_at: {
                 type: String,
                 required: true
+            },
+            id: {
+                type: String
+            }
+        },
+        methods: {
+            updateEvent() {
+                let data = new FormData();
+                data.append("name", this.name);
+                data.append("start_at", this.start_at);
+                data.append("end_at", this.end_at);
+                data.append("id", this.id);
+    
+                axios
+                    .put("/api/events/"+this.id, data)
+                    .then(response => {
+                        this.name = "";
+                        this.start_at = "";
+                        this.end_at = "";
+                    })
+                    .catch(err => {
+                        this.message = err.response.data.errors;
+                    });
             }
         }
     }
