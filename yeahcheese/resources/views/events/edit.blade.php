@@ -8,6 +8,7 @@
                     name="{{$event->name}}"
                     start_at="{{$event->start_at}}"
                     end_at="{{$event->end_at}}"
+                    id="{{$event->id}}"
                 ></eventedit-component>
             </div>
             <script src="{{ mix('js/app.js') }}"></script>
