@@ -6,7 +6,7 @@
         <style>body {padding: 80px;}</style>
         @include('style-sheet')
     </head>
-    <h1>写真一覧</h1>
+    <h1>写真閲覧</h1>
     <table class='table table-striped table-hover'>
         <tr>
             <th>イベント名</th><th>写真枚数</th>
