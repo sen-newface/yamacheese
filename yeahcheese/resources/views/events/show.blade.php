@@ -20,7 +20,7 @@
             </td>
         </tr>
     </table>
-    @foreach ($photos as $photo)
+    @foreach ($event->photos as $photo)
         <div style="margin: 10px;border: 1px solid;width:50%;">
             <img src="{{ \Storage::url($photo->path) }}" style="width:250px"><br>
             ID：{{ $photo->id }}<br>
