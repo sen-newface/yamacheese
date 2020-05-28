@@ -58,9 +58,9 @@
                         end_at: this.end_at
                     })
                     .then(response => {
-                        this.name = this.name;
-                        this.start_at = this.start_at;
-                        this.end_at = this.end_at;
+                        this.name = response.data.name;
+                        this.start_at = response.data.start_at;
+                        this.end_at = response.data.end_at;
                     })
                     .catch(err => {
                         this.message = err.response.data.errors;
