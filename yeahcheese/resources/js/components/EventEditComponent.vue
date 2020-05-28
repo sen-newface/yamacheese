@@ -74,6 +74,8 @@
                     })
                     .catch(err => {
                         this.messages = _.flatten(_.values(err.response.data.errors));
+                        this.messages.splice(0);
+                        this.messages.push('イベントが更新されました');
                     });
             },
             uploadPhoto() {
@@ -84,6 +86,8 @@
                     .then(response => {
                         this.photos.push(response.data);
                         this.$refs.imageFile.value = '';
+                        this.messages.splice(0);
+                        this.messages.push('アップロードが成功しました');
                     })
                     .catch(err => {
                         this.messages = _.flatten(_.values(err.response.data.errors));
