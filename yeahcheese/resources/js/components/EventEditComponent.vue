@@ -71,11 +71,11 @@
                         this.name = response.data.name;
                         this.start_at = response.data.start_at;
                         this.end_at = response.data.end_at;
+                        this.messages.splice(0);
+                        this.messages.push('イベントが更新されました');
                     })
                     .catch(err => {
                         this.messages = _.flatten(_.values(err.response.data.errors));
-                        this.messages.splice(0);
-                        this.messages.push('イベントが更新されました');
                     });
             },
             uploadPhoto() {
