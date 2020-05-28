@@ -41,7 +41,7 @@ class PhotoController extends Controller
             $photo->path = Storage::putFile('public', $request->file);  // 画像を保存
             $photo->event_id = $id;
             $photo->save();  // DBに追加
-            return ['success' => '登録しました!'];
+            return $photo;
         }
     }
 

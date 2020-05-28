@@ -18,6 +18,9 @@
                 <div>
                     <button @click="updateEvent">更新する</button>
                 </div>
+                <p><input ref="imageFile" type="file" accept="image/jpeg" required v-if="view" /></p>
+                <div>
+                    <button @click="uploadPhoto">アップロードする</button>
                 </div>
                 <li v-for="photo in photos" :key="photo.id">
                     <img style="max-width: 200px;" :src="'/storage/app/'+photo.path" />
@@ -72,6 +75,23 @@
                     .catch(err => {
                         this.messages = _.flatten(_.values(err.response.data.errors));
                     });
+            },
+            uploadPhoto() {
+                let params = new FormData();
+                params.append('file', this.$refs.imageFile.files[0]);
+                axios
+                    .post("/api/events/"+this.id+"/edit", params)
+                    .then(response => {
+                        this.photos.push(response.data);
+                        this.view = false;
+                        this.$nextTick(function() {
+                            this.view = true;
+                    });
+                    })
+                    .catch(err => {
+                        this.messages = _.flatten(_.values(err.response.data.errors));
+                    });
+            },
             getPhotos() {
                 axios
                     .get("/api/events/"+this.id+"/edit")
