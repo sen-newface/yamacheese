@@ -20,6 +20,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/keyinput', 'KeyinputController@index')->name('keyinput');
+Route::post('/events/show', 'KeyinputController@store')->name('keyinput.store');
 
 Route::middleware('auth')->group(function () {
     Route::get('/events', 'EventController@index')->name('events.index');
