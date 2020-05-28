@@ -30,7 +30,7 @@ class PhotoController extends Controller
     {
         
         $this->validate($request, [
-            'file' => 'required|image'
+            'file' => 'required|image|max:10240'
         ], [
             'file.required' => '画像が選択されていません',
             'file.image' => '画像ファイルではありません',
