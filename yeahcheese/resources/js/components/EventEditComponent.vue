@@ -14,7 +14,7 @@
                     <label>公開終了日</label><br>
                     <input type="date" name="end_at" v-model="end_at"/>
                 </div>
-                <p>{{ message }}</p>
+                <p v-for="(message, index) in messages" :key="index">{{ message }}</p>
                 <div>
                     <button @click="updateEvent">更新する</button>
                 </div>
@@ -40,7 +40,7 @@
                 name: '',
                 start_at: '',
                 end_at: '',
-                message: ''
+                messages: []
             };
         },
         mounted() {
@@ -63,7 +63,7 @@
                         this.end_at = response.data.end_at;
                     })
                     .catch(err => {
-                        this.message = err.response.data.errors;
+                        this.messages = _.flatten(_.values(err.response.data.errors));
                     });
             }
         }
