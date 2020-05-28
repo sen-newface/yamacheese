@@ -14,7 +14,7 @@
                     <label>公開終了日</label><br>
                     <input type="date" name="end_at" v-model="end_at"/>
                 </div>
-                <p v-for="(message, index) in messages" :key="index">{{ message }}</p>
+                <p class="text-info" v-for="(message, index) in messages" :key="index">{{ message }}</p>
                 <div>
                     <button @click="updateEvent">更新する</button>
                 </div>
