@@ -18,7 +18,7 @@
                 <div>
                     <button @click="updateEvent">更新する</button>
                 </div>
-                <p><input ref="imageFile" type="file" accept="image/jpeg" required v-if="view" /></p>
+                <p><input ref="imageFile" type="file" accept="image/jpeg" required /></p>
                 <div>
                     <button @click="uploadPhoto">アップロードする</button>
                 </div>
@@ -83,10 +83,7 @@
                     .post("/api/events/"+this.id+"/edit", params)
                     .then(response => {
                         this.photos.push(response.data);
-                        this.view = false;
-                        this.$nextTick(function() {
-                            this.view = true;
-                    });
+                        this.$refs.imageFile.value = '';
                     })
                     .catch(err => {
                         this.messages = _.flatten(_.values(err.response.data.errors));
