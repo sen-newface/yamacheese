@@ -60,7 +60,7 @@
             this.getPhotos();
         },
         methods: {
-            updateEvent() {    
+            updateEvent() {
                 axios
                     .put("/api/events/"+this.id, {
                         name: this.name,
