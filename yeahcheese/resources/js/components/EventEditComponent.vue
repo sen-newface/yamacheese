@@ -18,6 +18,10 @@
                 <div>
                     <button @click="updateEvent">更新する</button>
                 </div>
+                </div>
+                <li v-for="photo in photos" :key="photo.id">
+                    <img style="max-width: 200px;" :src="'/storage/app/'+photo.path" />
+                </li>
             </div>
         </div>
     </div>
@@ -40,7 +44,9 @@
                 name: '',
                 start_at: '',
                 end_at: '',
-                messages: []
+                messages: [],
+                photos: [],
+                view: true,
             };
         },
         mounted() {
@@ -48,6 +54,7 @@
             this.name = this.event.name;
             this.start_at = this.event.start_at;
             this.end_at = this.event.end_at
+            this.getPhotos();
         },
         methods: {
             updateEvent() {    
@@ -65,6 +72,12 @@
                     .catch(err => {
                         this.messages = _.flatten(_.values(err.response.data.errors));
                     });
+            getPhotos() {
+                axios
+                    .get("/api/events/"+this.id+"/edit")
+                    .then(response => {
+                        this.photos = response.data;
+                    })
             }
         }
     }
