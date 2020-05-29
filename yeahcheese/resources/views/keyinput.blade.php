@@ -4,6 +4,7 @@
         <meta charset='utf-8'>
         <title>keyinput</title>
         <style>body {padding: 80px;}</style>
+        @include('style-sheet')
     </head>
     <h1>認証キー入力</h1>
     @if (session('error'))
