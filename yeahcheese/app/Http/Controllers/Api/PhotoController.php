@@ -30,7 +30,7 @@ class PhotoController extends Controller
     {
         
         $this->validate($request, [
-            'file' => 'required|image'
+            'file' => 'required|image|max:10240'
         ], [
             'file.required' => '画像が選択されていません',
             'file.image' => '画像ファイルではありません',
@@ -41,7 +41,7 @@ class PhotoController extends Controller
             $photo->path = Storage::putFile('public', $request->file);  // 画像を保存
             $photo->event_id = $id;
             $photo->save();  // DBに追加
-            return ['success' => '登録しました!'];
+            return $photo;
         }
     }
 

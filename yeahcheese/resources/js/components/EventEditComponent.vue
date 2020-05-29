@@ -14,10 +14,17 @@
                     <label>公開終了日</label><br>
                     <input type="date" name="end_at" v-model="end_at"/>
                 </div>
-                <p>{{ message }}</p>
+                <p class="text-info" v-for="(message, index) in messages" :key="index">{{ message }}</p>
                 <div>
                     <button @click="updateEvent">更新する</button>
                 </div>
+                <p><input ref="imageFile" type="file" accept="image/jpeg" required /></p>
+                <div>
+                    <button @click="uploadPhoto">アップロードする</button>
+                </div>
+                <li v-for="photo in photos" :key="photo.id">
+                    <img style="max-width: 200px;" :src="'/storage/app/'+photo.path" />
+                </li>
             </div>
         </div>
     </div>
@@ -40,7 +47,9 @@
                 name: '',
                 start_at: '',
                 end_at: '',
-                message: ''
+                messages: [],
+                photos: [],
+                view: true,
             };
         },
         mounted() {
@@ -48,9 +57,10 @@
             this.name = this.event.name;
             this.start_at = this.event.start_at;
             this.end_at = this.event.end_at
+            this.getPhotos();
         },
         methods: {
-            updateEvent() {    
+            updateEvent() {
                 axios
                     .put("/api/events/"+this.id, {
                         name: this.name,
@@ -58,13 +68,37 @@
                         end_at: this.end_at
                     })
                     .then(response => {
-                        this.name = this.name;
-                        this.start_at = this.start_at;
-                        this.end_at = this.end_at;
+                        this.name = response.data.name;
+                        this.start_at = response.data.start_at;
+                        this.end_at = response.data.end_at;
+                        this.messages.splice(0);
+                        this.messages.push('イベントが更新されました');
                     })
                     .catch(err => {
-                        this.message = err.response.data.errors;
+                        this.messages = _.flatten(_.values(err.response.data.errors));
                     });
+            },
+            uploadPhoto() {
+                let params = new FormData();
+                params.append('file', this.$refs.imageFile.files[0]);
+                axios
+                    .post("/api/events/"+this.id+"/edit", params)
+                    .then(response => {
+                        this.photos.push(response.data);
+                        this.$refs.imageFile.value = '';
+                        this.messages.splice(0);
+                        this.messages.push('アップロードが成功しました');
+                    })
+                    .catch(err => {
+                        this.messages = _.flatten(_.values(err.response.data.errors));
+                    });
+            },
+            getPhotos() {
+                axios
+                    .get("/api/events/"+this.id+"/edit")
+                    .then(response => {
+                        this.photos = response.data;
+                    })
             }
         }
     }
